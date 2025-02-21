@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Counter</title>
+    <script>
+        async function getCount() {
+            const response = await fetch('/api/getCount');
+            const data = await response.json();
+            document.getElementById('counter').innerText = data.count || 0;
+        }
+
+        async function incrementCount() {
+            await fetch('/api/increment', { method: 'POST' });
+            getCount();
+        }
+
+        window.onload = getCount;
+    </script>
+</head>
+<body>
+    <h1>Escaneos del QR</h1>
+    <p>Veces escaneado: <span id="counter">0</span></p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://https://lively-wave-0e7faf71e.6.azurestaticapps.net/" alt="QR Code" onclick="incrementCount()">
+</body>
+</html>
