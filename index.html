@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Scan Counter</title>
+    <title>Contador de Escaneos</title>
+    <script>
+        async function scanQR() {
+            await fetch("/api/increment", { method: "POST" });
+            alert("Escaneo registrado");
+        }
+    </script>
 </head>
 <body>
     <h1>Escaneos del QR</h1>
-    <p id="counter">Cargando...</p>
-    <button onclick="incrementCounter()">Escaneé el QR</button>
-
-    <script src="script.js"></script>
+    <button onclick="scanQR()">Simular escaneo</button>
 </body>
 </html>
