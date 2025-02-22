@@ -1,8 +1,0 @@
-{
-  "name": "qr-counter-api",
-  "version": "1.0.0",
-  "main": "index.js",
-  "dependencies": {
-    "@azure/data-tables": "13.3.0"
-  }
-}
