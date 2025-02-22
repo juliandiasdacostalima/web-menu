@@ -1,8 +1,7 @@
-let count = 0; // Este es un valor fijo por ahora. Se puede cambiar o guardar en otro lugar más adelante.
-
 module.exports = async function (context, req) {
+    // Aquí es donde obtienes el valor actual del contador, que puede estar en una base de datos o en una variable
+    const count = 0;  // Este es un valor fijo por ahora. En un caso real, este valor sería dinámico y guardado en una base de datos.
     context.res = {
-        status: 200,
-        body: { count }  // Envía el valor actual del contador
+        body: { count }  // Envía el valor del contador como respuesta
     };
 };
