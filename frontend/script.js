@@ -10,5 +10,5 @@ async function incrementCounter() {
     await fetch(API_URL, { method: "POST" });
     fetchCounter();
 }
-
+ 
 fetchCounter();
