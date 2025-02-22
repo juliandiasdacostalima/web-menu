@@ -10,7 +10,7 @@ table_name = "qrCounter"
 table_client = table_service.get_table_client(table_name)
 
 # Verifica si la tabla existe, si no, la crea
-try:
+try: 
     table_client.create_table()
 except:
     pass
