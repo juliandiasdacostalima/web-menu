@@ -1,7 +1,17 @@
+const { TableClient } = require("@azure/data-tables");
+
+const tableName = "QRCounter";
+const connectionString = process.env.AzureWebJobsStorage;
+
 module.exports = async function (context, req) {
-    // Aquí es donde obtienes el valor actual del contador, que puede estar en una base de datos o en una variable
-    const count = 0;  // Este es un valor fijo por ahora. En un caso real, este valor sería dinámico y guardado en una base de datos.
-    context.res = {
-        body: { count }  // Envía el valor del contador como respuesta
-    };
+    const tableClient = TableClient.fromConnectionString(connectionString, tableName);
+    const partitionKey = "qr";
+    const rowKey = "counter";
+
+    try {
+        const entity = await tableClient.getEntity(partitionKey, rowKey);
+        context.res = { body: { count: entity.count } };
+    } catch (error) {
+        context.res = { body: { count: 0 } };
+    }
 };
