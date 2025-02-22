@@ -4,7 +4,7 @@ from azure.data.tables import TableServiceClient
 import os
 
 # Configuración de la conexión a Azure Table Storage
-connection_string = os.getenv("AzureWebJobsStorage")
+connection_string = os.getenv("STORAGE_STRING")
 table_service = TableServiceClient.from_connection_string(conn_str=connection_string)
 table_name = "qrCounter"
 table_client = table_service.get_table_client(table_name)
