@@ -1,17 +1,17 @@
-const { TableClient } = require("@azure/data-tables");
-
-const tableName = "QRCounter";
-const connectionString = process.env.AzureWebJobsStorage;
+const fs = require('fs');
+const path = './counter.json';  // Ruta al archivo donde se guarda el contador
 
 module.exports = async function (context, req) {
-    const tableClient = TableClient.fromConnectionString(connectionString, tableName);
-    const partitionKey = "qr";
-    const rowKey = "counter";
-
     try {
-        const entity = await tableClient.getEntity(partitionKey, rowKey);
-        context.res = { body: { count: entity.count } };
+        const data = fs.readFileSync(path, 'utf8');
+        const counter = JSON.parse(data).count;
+        context.res = {
+            body: { count: counter }
+        };
     } catch (error) {
-        context.res = { body: { count: 0 } };  // Si no existe, empieza en 0
+        context.res = {
+            status: 500,
+            body: { error: "No se pudo leer el contador" }
+        };
     }
 };
