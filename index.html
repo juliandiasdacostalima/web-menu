@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR con Contador</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <h1>Escanea el QR</h1>
+    <div id="qrcode"></div>
+    <p>Escaneos: <span id="contador">Cargando...</span></p>
+
+    <script>
+        // Generar QR con la URL de la página
+        let url = window.location.href;
+        new QRCode(document.getElementById("qrcode"), url);
+
+        // Obtener contador desde la API en Python
+        fetch("/api/contador")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("contador").innerText = data.count;
+            })
+            .catch(error => console.error("Error obteniendo contador:", error));
+    </script>
+</body>
+</html>
