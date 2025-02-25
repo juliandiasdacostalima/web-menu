@@ -1,19 +1,58 @@
-<script>
-    // Obtener contador desde la API en Python
-    fetch("/api/contador")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error HTTP: ${response.status}`);
-            }
-            return response.text(); // Leer la respuesta como texto
-        })
-        .then(text => {
-            try {
-                let data = JSON.parse(text); // Intentar convertir el texto en JSON
-                document.getElementById("contador").innerText = data.count;
-            } catch (error) {
-                console.error("Error parseando JSON:", error, "Respuesta del servidor:", text);
-            }
-        })
-        .catch(error => console.error("Error obteniendo contador:", error));
-</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR con Contador</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #qrcode {
+            margin: 20px auto;
+        }
+        #contador {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Escanea el QR</h1>
+    <div id="qrcode"></div>
+    <p>Veces escaneado: <span id="contador">Cargando...</span></p>
+
+    <script>
+        // 📌 Generar el QR con la URL de la página actual
+        let url = window.location.href;
+        new QRCode(document.getElementById("qrcode"), url);
+
+        // 📌 Llamar a la API para obtener el contador
+        fetch("/api/contador")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                return response.text(); // Leer la respuesta como texto
+            })
+            .then(text => {
+                try {
+                    let data = JSON.parse(text); // Intentar convertir el texto en JSON
+                    document.getElementById("contador").innerText = data.count;
+                } catch (error) {
+                    console.error("Error parseando JSON:", error, "Respuesta del servidor:", text);
+                    document.getElementById("contador").innerText = "Error";
+                }
+            })
+            .catch(error => {
+                console.error("Error obteniendo contador:", error);
+                document.getElementById("contador").innerText = "Error";
+            });
+    </script>
+
+</body>
+</html>
