@@ -3,6 +3,10 @@
     {
       "route": "/api/contador",
       "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/api/test",
+      "allowedRoles": ["anonymous"]
     }
   ]
 }
