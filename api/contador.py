@@ -2,8 +2,9 @@ import azure.functions as func
 import json
 from azure.data.tables import TableServiceClient
 
-CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=tu_cuenta;AccountKey=tu_llave;TableEndpoint=..."  # Reemplazar con tu conexión real
-TABLE_NAME = "qrscans"
+CONNECTION_STRING = os.getenv("STORAGE_CONNECTION_STRING")
+
+TABLE_NAME = "qrCounter"
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     client = TableServiceClient.from_connection_string(CONNECTION_STRING)
